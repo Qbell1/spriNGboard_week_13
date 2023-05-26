@@ -24,4 +24,12 @@ TEST_CASE("letters example", "")
   t_3.join();
   cout << endl << "this will print after all letters" << endl;
 }
+  // The way this prints will be decided by the OS and the scheduler.
 
+  // runs as expected but i notice that A is always the first letter to print but B is not always the 2nd letter to print.
+
+  // When LINE A is reached, there are 4 threads running.
+
+  // the lines execute but a test fails. The cores get dumped because the threads are not joined/detached so the OS recognizes it as an error.
+
+  // I cant see any other problems with this code.
