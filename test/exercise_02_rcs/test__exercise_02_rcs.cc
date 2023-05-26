@@ -9,10 +9,11 @@ using namespace std;
 
 void increment_counter (size_t & counter, std::mutex & counter_mutex, size_t num_times)
 {
+    lock_guard lock(counter_mutex);
   for (size_t idx=0; idx<num_times; ++idx) {
     this_thread::sleep_for(1ms); // simluate a complicated calculation
-    counter++;
   }
+    counter++;
 }
 
 TEST_CASE("increment example")
@@ -31,3 +32,10 @@ TEST_CASE("increment example")
   REQUIRE(counter == 3*num_times);
 }
 
+// They are being passed by reference because you want the counter to increase and change the argument. the utex is passed by refrence so all threads can act on the same object.
+
+// it should take around 2.5 sec and should pass. I was wrong.
+
+// It passes and it takes the same amount of time as the previous operation.
+
+// The test fails but takes the same amount of time to run (.001s). The increment operation should be in the for loop as its needed there but the lock works even if it is outside the loop.
